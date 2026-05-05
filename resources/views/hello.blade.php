@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Hola Mundo</title>
+    @livewireStyles
     <style>
         body {
             font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -35,6 +36,11 @@
     <main>
         <h1>Hola Mundo</h1>
         <p>Laravel + Docker listo para despegar.</p>
+        <div style="margin-top: 16px;">
+            <livewire:hello-launcher />
+        </div>
     </main>
+    @livewire('wire-elements-modal')
+    @livewireScripts
 </body>
 </html>
