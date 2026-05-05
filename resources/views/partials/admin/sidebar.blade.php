@@ -7,7 +7,7 @@
         <flux:navlist.item href="/admin/dashboard" icon="home">Dashboard</flux:navlist.item>
         <flux:navlist.item href="/admin/products" icon="shopping-bag">Productos</flux:navlist.item>
         <flux:navlist.item href="/admin/products/new" icon="plus-circle">Nuevo Producto</flux:navlist.item>
-        <flux:navlist.item href="/admin/orders" icon="clipboard-list">Pedidos</flux:navlist.item>
+        <flux:navlist.item href="/admin/orders" icon="clipboard-document-list">Pedidos</flux:navlist.item>
         <flux:navlist.item href="/admin/users" icon="users">Usuarios</flux:navlist.item>
     </flux:navlist>
 
@@ -15,7 +15,7 @@
 
     <flux:navlist variant="outline">
         <flux:navlist.item href="/admin/settings" icon="cog-6-tooth">Configuración</flux:navlist.item>
-        <flux:navlist.item href="/" icon="arrow-left-on-rectangle">Volver a Tienda</flux:navlist.item>
+        <flux:navlist.item href="/" icon="arrow-left-start-on-rectangle">Volver a Tienda</flux:navlist.item>
     </flux:navlist>
 
     <flux:dropdown position="top" align="start" class="max-lg:hidden">
