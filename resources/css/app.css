@@ -1,4 +1,5 @@
-@import 'tailwindcss';
+@import "tailwindcss";
+@import "../../vendor/livewire/flux/dist/flux.css";
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
@@ -6,6 +7,34 @@
 @source '../**/*.js';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: 'Outfit', 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
+    
+    /* Premium Color Palette - Deep Indigo/Violet */
+    --color-brand-50: oklch(0.97 0.01 264);
+    --color-brand-100: oklch(0.93 0.03 264);
+    --color-brand-200: oklch(0.85 0.06 264);
+    --color-brand-300: oklch(0.75 0.1 264);
+    --color-brand-400: oklch(0.65 0.15 264);
+    --color-brand-500: oklch(0.55 0.2 264);
+    --color-brand-600: oklch(0.45 0.2 264);
+    --color-brand-700: oklch(0.35 0.18 264);
+    --color-brand-800: oklch(0.25 0.15 264);
+    --color-brand-900: oklch(0.15 0.1 264);
+
+    --radius-xl: 1rem;
+    --radius-2xl: 1.5rem;
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Glassmorphism Utilities */
+.glass {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dark .glass {
+    background: rgba(15, 15, 20, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }

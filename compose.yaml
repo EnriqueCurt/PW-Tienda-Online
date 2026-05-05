@@ -10,3 +10,4 @@ services:
             APP_DEBUG: 'true'
         volumes:
             - '.:/app'
+            - './docker/php/opcache.ini:/usr/local/etc/php/conf.d/opcache.ini'
