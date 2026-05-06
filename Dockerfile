@@ -5,7 +5,7 @@ WORKDIR /app
 COPY composer.json composer.lock ./
 RUN composer install --no-dev --prefer-dist --no-interaction --no-scripts --optimize-autoloader --ignore-platform-reqs
 
-FROM node:20-alpine AS frontend
+FROM node:20 AS frontend
 
 WORKDIR /app
 
