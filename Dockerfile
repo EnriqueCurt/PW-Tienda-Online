@@ -12,11 +12,7 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm install
 
-# Copiamos todo el código fuente
 COPY . .
-
-# IMPORTANTE: Flux UI necesita archivos que están dentro de la carpeta vendor
-# Como vendor está en el .dockerignore, tenemos que traerlo de la etapa anterior
 COPY --from=vendor /app/vendor /app/vendor
 
 RUN npm run build
@@ -25,8 +21,22 @@ FROM php:8.2-cli-alpine
 
 WORKDIR /app
 
-RUN apk add --no-cache bash postgresql-dev \
-    && docker-php-ext-install pdo_pgsql
+# Instalamos dependencias necesarias para Laravel y extensiones de PHP
+RUN apk add --no-cache \
+    bash \
+    postgresql-dev \
+    libxml2-dev \
+    libpng-dev \
+    libzip-dev \
+    zip \
+    unzip
+
+RUN docker-php-ext-install \
+    pdo_pgsql \
+    bcmath \
+    gd \
+    zip \
+    opcache
 
 COPY . .
 COPY --from=vendor /app/vendor /app/vendor
@@ -40,4 +50,5 @@ RUN mkdir -p storage bootstrap/cache \
 ENV PORT=8000
 EXPOSE 8000
 
+# En Render, asegúrate de configurar APP_KEY y los datos de la base de datos en las Environment Variables
 CMD ["sh", "-c", "php artisan migrate --force && php -S 0.0.0.0:${PORT} -t public"]
