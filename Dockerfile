@@ -12,7 +12,13 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm install
 
+# Copiamos todo el código fuente
 COPY . .
+
+# IMPORTANTE: Flux UI necesita archivos que están dentro de la carpeta vendor
+# Como vendor está en el .dockerignore, tenemos que traerlo de la etapa anterior
+COPY --from=vendor /app/vendor /app/vendor
+
 RUN npm run build
 
 FROM php:8.2-cli-alpine
