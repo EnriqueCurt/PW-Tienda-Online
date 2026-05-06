@@ -6,6 +6,11 @@ RUN apk add --no-cache bash nodejs npm \
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && docker-php-ext-install opcache
 
+RUN mkdir -p storage/framework/cache/data \
+             storage/framework/sessions \
+             storage/framework/views \
+             bootstrap/cache
+
 ENV PORT=8000
 EXPOSE 8000
 
