@@ -42,10 +42,15 @@ COPY . .
 COPY --from=vendor /app/vendor /app/vendor
 COPY --from=frontend /app/public/build /app/public/build
 
-RUN php artisan package:discover --ansi
-
-RUN mkdir -p storage bootstrap/cache \
+# Creamos los directorios de storage antes de ejecutar comandos de artisan
+RUN mkdir -p storage/framework/cache/data \
+             storage/framework/sessions \
+             storage/framework/testing \
+             storage/framework/views \
+             bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
+
+RUN php artisan package:discover --ansi
 
 ENV PORT=8000
 EXPOSE 8000
