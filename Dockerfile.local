@@ -2,7 +2,7 @@ FROM php:8.2-cli-alpine
 
 WORKDIR /app
 
-RUN apk add --no-cache bash \
+RUN apk add --no-cache bash nodejs npm \
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && docker-php-ext-install opcache
 
