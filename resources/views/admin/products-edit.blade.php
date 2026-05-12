@@ -66,9 +66,9 @@
                             @error('image_url') <flux:error>{{ $message }}</flux:error> @enderror
                         </flux:field>
 
-                        <div class="flex gap-4 pt-4 border-t border-zinc-100 dark:border-zinc-800">
+                        <div class="flex gap-4 pt-4 border-t border-zinc-800">
                             <flux:button type="submit" variant="primary" class="flex-1">Guardar Cambios</flux:button>
-                            <flux:button href="{{ route('admin.products.index') }}" variant="ghost" class="flex-1">Cancelar</flux:button>
+                            <flux:button href="{{ route('admin.products.index') }}" variant="ghost" class="flex-1" wire:navigate>Cancelar</flux:button>
                         </div>
                     </form>
                 </flux:card>

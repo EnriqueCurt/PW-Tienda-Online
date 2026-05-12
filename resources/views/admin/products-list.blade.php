@@ -53,7 +53,7 @@
                                     </flux:table.cell>
                                     <flux:table.cell align="end">
                                         <div class="flex justify-end gap-2">
-                                            <flux:button variant="ghost" icon="pencil-square" href="{{ route('admin.products.edit', $product) }}" />
+                                            <flux:button variant="ghost" icon="pencil-square" href="{{ route('admin.products.edit', $product) }}" wire:navigate />
                                             
                                             <flux:modal.trigger name="delete-product-{{ $product->id }}">
                                                 <flux:button variant="ghost" icon="trash" class="text-red-500 hover:text-red-600" />

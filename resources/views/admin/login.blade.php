@@ -1,5 +1,5 @@
 <x-layouts.app>
-    <div class="min-h-screen flex items-center justify-center bg-zinc-50 dark:bg-zinc-950 p-6 relative overflow-hidden">
+    <div class="min-h-screen flex items-center justify-center bg-zinc-950 p-6 relative overflow-hidden">
         <!-- Abstract Background Shapes -->
         <div class="absolute top-0 left-0 w-96 h-96 bg-brand-500/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
         <div class="absolute bottom-0 right-0 w-96 h-96 bg-brand-600/10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
