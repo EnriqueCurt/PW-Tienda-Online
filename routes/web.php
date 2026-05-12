@@ -7,16 +7,21 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Response;
 
 // Flux Fallback Routes for Production
-Route::get('/flux/flux.js', function () {
-    return Response::file(public_path('vendor/flux/flux.js'), [
-        'Content-Type' => 'application/javascript',
-    ]);
-});
-Route::get('/flux/flux.css', function () {
-    return Response::file(public_path('vendor/flux/flux.css'), [
-        'Content-Type' => 'text/css',
-    ]);
-});
+Route::get('/flux/{file}', function ($file) {
+    $path = public_path("vendor/flux/{$file}");
+    if (!file_exists($path)) {
+        // Fallback to the .js or .css extension if missing
+        if (str_ends_with($file, '.js')) $path = public_path('vendor/flux/flux.js');
+        if (str_ends_with($file, '.css')) $path = public_path('vendor/flux/flux.css');
+    }
+    
+    if (file_exists($path)) {
+        return response()->file($path, [
+            'Content-Type' => str_ends_with($path, '.js') ? 'application/javascript' : 'text/css',
+        ]);
+    }
+    abort(404);
+})->where('file', '.*');
 
 /*
 |--------------------------------------------------------------------------
