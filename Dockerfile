@@ -50,7 +50,8 @@ RUN mkdir -p storage/framework/cache/data \
              bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
 
-RUN php artisan package:discover --ansi
+RUN php artisan package:discover --ansi \
+    && php artisan livewire:publish --assets --force
 
 ENV PORT=8000
 EXPOSE 8000

@@ -15,8 +15,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
 
-    <!-- Flux Appearance -->
-    @fluxAppearance
+    <!-- Flux Assets (Manual fallback for production 404s) -->
+    <link rel="stylesheet" href="{{ asset('vendor/flux/flux.css') }}">
 
     <!-- Scripts and Styles -->
     @livewireStyles
@@ -32,6 +32,6 @@
     <livewire:toast />
 
     @livewireScripts
-    @fluxScripts
+    <script src="{{ asset('vendor/flux/flux.js') }}" defer></script>
 </body>
 </html>
