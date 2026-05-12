@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,6 +33,11 @@ Route::get('/perfil', function () {
     return view('store.perfil');
 });
 
+// Store Auth
+Route::get('/login', [AuthController::class, 'showStoreLogin'])->name('login');
+Route::post('/login', [AuthController::class, 'storeLogin']);
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
 /*
 |--------------------------------------------------------------------------
 | Admin Routes
@@ -39,19 +45,22 @@ Route::get('/perfil', function () {
 */
 
 Route::prefix('admin')->group(function () {
-    Route::get('/login', function () {
-        return view('admin.login');
-    });
+    // Auth (public)
+    Route::get('/login', [AuthController::class, 'showAdminLogin'])->name('admin.login');
+    Route::post('/login', [AuthController::class, 'adminLogin']);
 
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard');
-    });
+    // Protected admin routes
+    Route::middleware(['auth', 'admin'])->group(function () {
+        Route::get('/dashboard', function () {
+            return view('admin.dashboard');
+        })->name('admin.dashboard');
 
-    Route::get('/products', function () {
-        return view('admin.products-list');
-    });
+        Route::get('/products', function () {
+            return view('admin.products-list');
+        });
 
-    Route::get('/products/new', function () {
-        return view('admin.products-new');
+        Route::get('/products/new', function () {
+            return view('admin.products-new');
+        });
     });
 });

@@ -1,17 +1,22 @@
 <x-layouts.app>
-    <div class="min-h-screen flex items-center justify-center bg-zinc-50 dark:bg-zinc-950 p-6 relative overflow-hidden">
-        <!-- Abstract Background Shapes -->
-        <div class="absolute top-0 left-0 w-96 h-96 bg-brand-500/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
-        <div class="absolute bottom-0 right-0 w-96 h-96 bg-brand-600/10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
+    @include('partials.store.navbar')
 
-        <div class="w-full max-w-md relative">
+    <div class="min-h-[calc(100vh-4rem)] flex items-center justify-center bg-zinc-50 dark:bg-zinc-950 p-6 relative overflow-hidden">
+        <!-- Abstract Background Shapes -->
+        <div class="absolute top-20 left-10 w-72 h-72 bg-brand-500/8 rounded-full blur-3xl animate-pulse"></div>
+        <div class="absolute bottom-10 right-10 w-80 h-80 bg-brand-600/8 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
+        <div class="absolute top-1/2 left-1/2 w-64 h-64 bg-brand-400/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+
+        <div class="w-full max-w-md relative z-10">
             <div class="text-center mb-8">
-                <flux:brand href="#" logo="https://fluxui.dev/img/demo/logo.png" name="Admin Panel" class="justify-center mb-4" />
-                <flux:heading size="xl">Bienvenido</flux:heading>
-                <flux:subheading>Inicia sesión para gestionar tu tienda</flux:subheading>
+                <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-brand-500/10 dark:bg-brand-400/10 mb-6">
+                    <flux:icon.user-circle class="size-8 text-brand-600 dark:text-brand-400" />
+                </div>
+                <flux:heading size="xl">Bienvenido de vuelta</flux:heading>
+                <flux:subheading class="mt-2">Inicia sesión para acceder a tu cuenta</flux:subheading>
             </div>
 
-            <flux:card class="p-8 shadow-2xl border-white/20 glass">
+            <flux:card class="p-8 shadow-2xl border-white/20">
                 {{-- Error messages --}}
                 @if ($errors->any())
                     <div class="mb-6 p-4 rounded-lg bg-red-50 dark:bg-red-950/50 border border-red-200 dark:border-red-800">
@@ -22,11 +27,11 @@
                     </div>
                 @endif
 
-                <form action="{{ route('admin.login') }}" method="POST" class="space-y-6">
+                <form action="{{ url('/login') }}" method="POST" class="space-y-6">
                     @csrf
                     <flux:field>
                         <flux:label>Correo Electrónico</flux:label>
-                        <flux:input type="email" name="email" value="{{ old('email') }}" placeholder="admin@tienda.com" required icon="envelope" />
+                        <flux:input type="email" name="email" value="{{ old('email') }}" placeholder="tu@email.com" required icon="envelope" />
                         @error('email')
                             <flux:error>{{ $message }}</flux:error>
                         @enderror
@@ -52,9 +57,13 @@
                 </form>
             </flux:card>
 
-            <div class="text-center mt-8">
-                <flux:link href="/" icon="arrow-left" class="text-zinc-500 hover:text-zinc-900 dark:hover:text-white">
-                    Volver a la tienda pública
+            <div class="text-center mt-8 space-y-3">
+                <p class="text-sm text-zinc-500 dark:text-zinc-400">
+                    ¿No tienes una cuenta?
+                    <flux:link href="#" class="text-brand-600 dark:text-brand-400 font-semibold">Regístrate aquí</flux:link>
+                </p>
+                <flux:link href="/" icon="arrow-left" class="text-zinc-500 hover:text-zinc-900 dark:hover:text-white text-sm">
+                    Volver a la tienda
                 </flux:link>
             </div>
         </div>

@@ -20,15 +20,26 @@
                 <flux:badge color="brand" class="absolute -top-1 -right-1 text-[10px] px-1 min-w-[18px] h-[18px] flex items-center justify-center">2</flux:badge>
             </flux:button>
 
-            <flux:dropdown>
-                <flux:button variant="ghost" icon="user-circle" />
-                <flux:menu>
-                    <flux:menu.item href="/perfil" icon="user">Mi Perfil</flux:menu.item>
-                    <flux:menu.item href="/admin/dashboard" icon="shield-check">Administración</flux:menu.item>
-                    <flux:menu.separator />
-                    <flux:menu.item icon="arrow-right-start-on-rectangle">Salir</flux:menu.item>
-                </flux:menu>
-            </flux:dropdown>
+            @auth
+                <flux:dropdown>
+                    <flux:profile initials="{{ strtoupper(substr(Auth::user()->name, 0, 2)) }}" />
+                    <flux:menu>
+                        <flux:menu.item href="/perfil" icon="user">Mi Perfil</flux:menu.item>
+                        @if(Auth::user()->isAdmin())
+                            <flux:menu.item href="/admin/dashboard" icon="shield-check">Administración</flux:menu.item>
+                        @endif
+                        <flux:menu.separator />
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <flux:menu.item type="submit" icon="arrow-right-start-on-rectangle">Cerrar Sesión</flux:menu.item>
+                        </form>
+                    </flux:menu>
+                </flux:dropdown>
+            @else
+                <flux:button href="/login" variant="ghost" icon="user-circle">
+                    Iniciar Sesión
+                </flux:button>
+            @endauth
 
             <flux:sidebar.toggle class="md:hidden" />
         </div>
