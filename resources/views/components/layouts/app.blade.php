@@ -19,6 +19,7 @@
     @fluxAppearance
 
     <!-- Scripts and Styles -->
+    @livewireStyles
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-screen font-sans antialiased bg-zinc-950 text-zinc-100">
@@ -30,6 +31,7 @@
 
     <livewire:toast />
 
+    @livewireScripts
     @fluxScripts
 </body>
 </html>

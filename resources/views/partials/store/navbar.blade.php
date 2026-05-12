@@ -1,4 +1,4 @@
-<flux:header wire:persist="navbar" class="bg-zinc-950/80 backdrop-blur-md sticky top-0 z-50 border-b border-zinc-800">
+<flux:header class="bg-zinc-950/80 backdrop-blur-md sticky top-0 z-50 border-b border-zinc-800">
     <div class="max-w-7xl mx-auto w-full px-4 lg:px-8 flex items-center h-16">
         <flux:brand href="/" logo="https://fluxui.dev/img/demo/logo.png" name="Premium Store" />
 
@@ -22,15 +22,13 @@
             <livewire:cart-badge />
 
             @auth
-                <flux:dropdown wire:key="user-dropdown">
-                    <flux:button variant="ghost" class="p-1 rounded-full">
-                        <flux:profile initials="{{ strtoupper(substr(Auth::user()->name, 0, 2)) }}" />
-                    </flux:button>
+                <flux:dropdown>
+                    <flux:profile initials="{{ strtoupper(substr(Auth::user()->name, 0, 2)) }}" />
                     
                     <flux:menu>
-                        <flux:menu.item href="{{ route('perfil') }}" icon="user" wire:navigate>Mi Perfil</flux:menu.item>
+                        <flux:menu.item href="{{ route('perfil') }}" icon="user">Mi Perfil</flux:menu.item>
                         @if(Auth::user()->isAdmin())
-                            <flux:menu.item href="{{ route('admin.dashboard') }}" icon="shield-check" wire:navigate>Administración</flux:menu.item>
+                            <flux:menu.item href="{{ route('admin.dashboard') }}" icon="shield-check">Administración</flux:menu.item>
                         @endif
                         <flux:menu.separator />
                         <form method="POST" action="{{ route('logout') }}">
@@ -40,7 +38,7 @@
                     </flux:menu>
                 </flux:dropdown>
             @else
-                <flux:button href="{{ route('login') }}" variant="ghost" icon="user-circle" wire:navigate>
+                <flux:button href="{{ route('login') }}" variant="ghost" icon="user-circle">
                     Iniciar Sesión
                 </flux:button>
             @endauth
