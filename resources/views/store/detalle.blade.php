@@ -61,7 +61,7 @@
                     </div>
                 </div>
 
-                <flux:card class="bg-zinc-50 dark:bg-zinc-900/50 border-none">
+                <flux:card class="bg-zinc-900/50 border-none">
                     <div class="space-y-4">
                         <div class="flex items-start gap-3">
                             <flux:icon.truck class="size-5 text-brand-600" />

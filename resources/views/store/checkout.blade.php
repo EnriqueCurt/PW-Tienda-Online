@@ -58,7 +58,7 @@
 
             <!-- Summary & Pay -->
             <div>
-                <flux:card class="p-8 bg-zinc-50 dark:bg-zinc-900 border-none shadow-none">
+                <flux:card class="p-8 bg-zinc-900 border-none shadow-none">
                     <flux:heading size="lg" class="mb-6">Tu Pedido</flux:heading>
                     
                     <div class="space-y-6 mb-10">

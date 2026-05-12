@@ -1,4 +1,4 @@
-<flux:header class="bg-white/80 dark:bg-zinc-950/80 backdrop-blur-md sticky top-0 z-50 border-b border-zinc-200 dark:border-zinc-800">
+<flux:header wire:persist="navbar" class="bg-zinc-950/80 backdrop-blur-md sticky top-0 z-50 border-b border-zinc-800">
     <div class="max-w-7xl mx-auto w-full px-4 lg:px-8 flex items-center h-16">
         <flux:brand href="/" logo="https://fluxui.dev/img/demo/logo.png" name="Premium Store" />
 
@@ -14,20 +14,23 @@
         <flux:spacer />
 
         <div class="flex items-center gap-4">
-            <form action="{{ route('catalogo') }}" method="GET" class="hidden md:flex items-center bg-zinc-100 dark:bg-zinc-800 rounded-full px-3 py-1 border border-transparent focus-within:border-brand-500 transition-colors">
+            <form action="{{ route('catalogo') }}" method="GET" class="hidden md:flex items-center bg-zinc-800 rounded-full px-3 py-1 border border-transparent focus-within:border-brand-500 transition-colors">
                 <flux:icon.magnifying-glass class="size-4 text-zinc-400" />
-                <input type="text" name="search" placeholder="Buscar productos..." class="bg-transparent border-none focus:ring-0 text-sm w-48 text-zinc-900 dark:text-white" value="{{ request('search') }}">
+                <input type="text" name="search" placeholder="Buscar productos..." class="bg-transparent border-none focus:ring-0 text-sm w-48 text-zinc-100" value="{{ request('search') }}">
             </form>
             
             <livewire:cart-badge />
 
             @auth
-                <flux:dropdown>
-                    <flux:profile initials="{{ strtoupper(substr(Auth::user()->name, 0, 2)) }}" />
+                <flux:dropdown wire:key="user-dropdown">
+                    <flux:button variant="ghost" class="p-1 rounded-full">
+                        <flux:profile initials="{{ strtoupper(substr(Auth::user()->name, 0, 2)) }}" />
+                    </flux:button>
+                    
                     <flux:menu>
-                        <flux:menu.item href="/perfil" icon="user">Mi Perfil</flux:menu.item>
+                        <flux:menu.item href="{{ route('perfil') }}" icon="user" wire:navigate>Mi Perfil</flux:menu.item>
                         @if(Auth::user()->isAdmin())
-                            <flux:menu.item href="/admin/dashboard" icon="shield-check">Administración</flux:menu.item>
+                            <flux:menu.item href="{{ route('admin.dashboard') }}" icon="shield-check" wire:navigate>Administración</flux:menu.item>
                         @endif
                         <flux:menu.separator />
                         <form method="POST" action="{{ route('logout') }}">
@@ -37,7 +40,7 @@
                     </flux:menu>
                 </flux:dropdown>
             @else
-                <flux:button href="/login" variant="ghost" icon="user-circle">
+                <flux:button href="{{ route('login') }}" variant="ghost" icon="user-circle" wire:navigate>
                     Iniciar Sesión
                 </flux:button>
             @endauth

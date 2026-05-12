@@ -36,7 +36,7 @@
             </div>
 
             <div class="space-y-6">
-                <flux:card class="p-8 space-y-6 bg-zinc-50 dark:bg-zinc-900/50">
+                <flux:card class="p-8 space-y-6 bg-zinc-900/50">
                     <flux:heading size="lg">Resumen del pedido</flux:heading>
                     
                     <div class="space-y-4 text-sm">
@@ -64,7 +64,7 @@
             </div>
         </div>
     @else
-        <div class="text-center py-20 bg-zinc-50 dark:bg-zinc-900/50 rounded-3xl border-2 border-dashed border-zinc-200 dark:border-zinc-800">
+        <div class="text-center py-20 bg-zinc-900/50 rounded-3xl border-2 border-dashed border-zinc-800">
             <flux:icon.shopping-bag class="size-16 mx-auto text-zinc-300 mb-6" />
             <flux:heading size="xl" class="mb-4">Tu carrito está vacío</flux:heading>
             <flux:subheading class="mb-8">¡Añade algunos productos premium para empezar!</flux:subheading>

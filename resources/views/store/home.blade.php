@@ -31,7 +31,7 @@
         </section>
 
         <!-- Featured Categories -->
-        <section class="py-20 bg-zinc-50 dark:bg-zinc-950">
+        <section class="py-20 bg-zinc-950">
             <div class="max-w-7xl mx-auto px-4 lg:px-8">
                 <div class="flex items-center justify-between mb-12">
                     <flux:heading size="xl">Categorías Destacadas</flux:heading>

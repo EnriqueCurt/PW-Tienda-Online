@@ -5,7 +5,7 @@
         <div class="flex flex-col md:flex-row gap-12">
             <!-- Sidebar Nav -->
             <aside class="w-full md:w-64">
-                <div class="flex flex-col items-center mb-8 p-6 bg-zinc-50 dark:bg-zinc-900 rounded-3xl">
+                <div class="flex flex-col items-center mb-8 p-6 bg-zinc-900 rounded-3xl">
                     <div class="w-24 h-24 bg-brand-500 rounded-full flex items-center justify-center text-white text-3xl font-bold mb-4 shadow-xl shadow-brand-500/20">
                         {{ strtoupper(substr($user->name, 0, 2)) }}
                     </div>
@@ -70,7 +70,7 @@
                             </flux:table.rows>
                         </flux:table>
                     @else
-                        <div class="text-center py-12 bg-zinc-50 dark:bg-zinc-900/50 rounded-2xl border-2 border-dashed border-zinc-200 dark:border-zinc-800">
+                        <div class="text-center py-12 bg-zinc-900/50 rounded-2xl border-2 border-dashed border-zinc-800">
                             <p class="text-zinc-500">Aún no has realizado ningún pedido.</p>
                             <flux:button variant="ghost" href="/catalogo" class="mt-4">Ir a la tienda</flux:button>
                         </div>

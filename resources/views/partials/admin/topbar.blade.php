@@ -1,4 +1,4 @@
-<flux:header class="bg-white/80 dark:bg-zinc-950/80 backdrop-blur-md sticky top-0 z-10 border-b border-zinc-200 dark:border-zinc-800">
+<flux:header class="bg-zinc-950/80 backdrop-blur-md sticky top-0 z-10 border-b border-zinc-800">
     <flux:sidebar.toggle class="lg:hidden" />
 
     <flux:spacer />
