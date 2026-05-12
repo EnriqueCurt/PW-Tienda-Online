@@ -8,11 +8,11 @@ use Illuminate\Support\Facades\Response;
 
 // Flux Fallback Routes for Production
 Route::get('/flux/{file}', function ($file) {
-    $path = public_path("vendor/flux/{$file}");
+    $path = public_path("flux/{$file}");
     if (!file_exists($path)) {
         // Fallback to the .js or .css extension if missing
-        if (str_ends_with($file, '.js')) $path = public_path('vendor/flux/flux.js');
-        if (str_ends_with($file, '.css')) $path = public_path('vendor/flux/flux.css');
+        if (str_ends_with($file, '.js')) $path = public_path('flux/flux.js');
+        if (str_ends_with($file, '.css')) $path = public_path('flux/flux.css');
         if (str_ends_with($file, '.map')) return response('', 204);
     }
     

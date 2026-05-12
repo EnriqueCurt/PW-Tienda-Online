@@ -52,11 +52,11 @@ RUN mkdir -p storage/framework/cache/data \
 
 RUN php artisan package:discover --ansi \
     && php artisan livewire:publish --assets \
-    && mkdir -p public/vendor/flux \
-    && cp vendor/livewire/flux/dist/flux.min.js public/vendor/flux/flux.js \
-    && cp vendor/livewire/flux/dist/flux.min.js public/vendor/flux/flux.min.js \
-    && cp vendor/livewire/flux/dist/flux.css public/vendor/flux/flux.css \
-    && cp vendor/livewire/flux/dist/flux.css public/vendor/flux/flux.min.css
+    && mkdir -p public/flux \
+    && cp vendor/livewire/flux/dist/flux.min.js public/flux/flux.js \
+    && cp vendor/livewire/flux/dist/flux.min.js public/flux/flux.min.js \
+    && cp vendor/livewire/flux/dist/flux.css public/flux/flux.css \
+    && cp vendor/livewire/flux/dist/flux.css public/flux/flux.min.css
 
 ENV PORT=8000
 EXPOSE 8000
