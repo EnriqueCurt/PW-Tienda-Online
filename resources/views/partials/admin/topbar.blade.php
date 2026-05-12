@@ -9,10 +9,13 @@
     </flux:navbar>
 
     <flux:dropdown class="lg:hidden">
-        <flux:profile name="Admin" initials="AD" />
+        <flux:profile name="{{ Auth::user()->name ?? 'Administrador' }}" initials="{{ strtoupper(substr(Auth::user()->name ?? 'AD', 0, 2)) }}" />
         <flux:menu>
-            <flux:menu.item icon="user">Perfil</flux:menu.item>
-            <flux:menu.item icon="arrow-right-start-on-rectangle">Salir</flux:menu.item>
+            <flux:menu.item href="/perfil" icon="user">Perfil</flux:menu.item>
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <flux:menu.item type="submit" icon="arrow-right-start-on-rectangle">Cerrar Sesión</flux:menu.item>
+            </form>
         </flux:menu>
     </flux:dropdown>
 </flux:header>

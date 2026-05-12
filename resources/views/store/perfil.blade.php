@@ -7,10 +7,10 @@
             <aside class="w-full md:w-64">
                 <div class="flex flex-col items-center mb-8 p-6 bg-zinc-50 dark:bg-zinc-900 rounded-3xl">
                     <div class="w-24 h-24 bg-brand-500 rounded-full flex items-center justify-center text-white text-3xl font-bold mb-4 shadow-xl shadow-brand-500/20">
-                        JP
+                        {{ strtoupper(substr($user->name, 0, 2)) }}
                     </div>
-                    <flux:heading size="lg">Juan Pérez</flux:heading>
-                    <p class="text-zinc-500 text-sm">Miembro desde 2024</p>
+                    <flux:heading size="lg">{{ $user->name }}</flux:heading>
+                    <p class="text-zinc-500 text-sm">Miembro desde {{ $user->created_at->format('Y') }}</p>
                 </div>
 
                 <flux:navlist variant="outline">
@@ -18,7 +18,10 @@
                     <flux:navlist.item href="#" icon="shopping-bag">Mis Pedidos</flux:navlist.item>
                     <flux:navlist.item href="#" icon="map-pin">Direcciones</flux:navlist.item>
                     <flux:navlist.item href="#" icon="heart">Lista de Deseos</flux:navlist.item>
-                    <flux:navlist.item href="#" icon="arrow-right-start-on-rectangle" class="text-rose-500">Cerrar Sesión</flux:navlist.item>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <flux:navlist.item type="submit" icon="arrow-right-start-on-rectangle" class="text-rose-500">Cerrar Sesión</flux:navlist.item>
+                    </form>
                 </flux:navlist>
             </aside>
 
@@ -30,15 +33,11 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                             <flux:field>
                                 <flux:label>Nombre</flux:label>
-                                <flux:input value="Juan" />
-                            </flux:field>
-                            <flux:field>
-                                <flux:label>Apellidos</flux:label>
-                                <flux:input value="Pérez" />
+                                <flux:input value="{{ $user->name }}" />
                             </flux:field>
                             <flux:field class="md:col-span-2">
                                 <flux:label>Correo Electrónico</flux:label>
-                                <flux:input value="juan.perez@ejemplo.com" icon="envelope" />
+                                <flux:input value="{{ $user->email }}" icon="envelope" disabled />
                             </flux:field>
                         </div>
                         <div class="mt-8">
@@ -49,33 +48,33 @@
 
                 <section>
                     <flux:heading size="xl" class="mb-8">Pedidos Recientes</flux:heading>
-                    <flux:table>
-                        <flux:table.columns>
-                            <flux:table.column>Pedido</flux:table.column>
-                            <flux:table.column>Fecha</flux:table.column>
-                            <flux:table.column>Estado</flux:table.column>
-                            <flux:table.column align="end">Total</flux:table.column>
-                        </flux:table.columns>
-
-                        <flux:table.rows>
-                            <flux:table.row>
-                                <flux:table.cell class="font-bold">#ORD-9921</flux:table.cell>
-                                <flux:table.cell>15 Abr, 2024</flux:table.cell>
-                                <flux:table.cell>
-                                    <flux:badge color="green">Entregado</flux:badge>
-                                </flux:table.cell>
-                                <flux:table.cell align="end" class="font-bold">$124.50</flux:table.cell>
-                            </flux:table.row>
-                            <flux:table.row>
-                                <flux:table.cell class="font-bold">#ORD-9845</flux:table.cell>
-                                <flux:table.cell>02 Mar, 2024</flux:table.cell>
-                                <flux:table.cell>
-                                    <flux:badge color="green">Entregado</flux:badge>
-                                </flux:table.cell>
-                                <flux:table.cell align="end" class="font-bold">$89.00</flux:table.cell>
-                            </flux:table.row>
-                        </flux:table.rows>
-                    </flux:table>
+                    @if(count($orders) > 0)
+                        <flux:table>
+                            <flux:table.columns>
+                                <flux:table.column>Pedido</flux:table.column>
+                                <flux:table.column>Fecha</flux:table.column>
+                                <flux:table.column>Estado</flux:table.column>
+                                <flux:table.column align="end">Total</flux:table.column>
+                            </flux:table.columns>
+                            <flux:table.rows>
+                                @foreach($orders as $order)
+                                    <flux:table.row>
+                                        <flux:table.cell class="font-bold">#ORD-{{ $order->id }}</flux:table.cell>
+                                        <flux:table.cell>{{ $order->created_at->format('d M, Y') }}</flux:table.cell>
+                                        <flux:table.cell>
+                                            <flux:badge color="green">Entregado</flux:badge>
+                                        </flux:table.cell>
+                                        <flux:table.cell align="end" class="font-bold">${{ number_format($order->total, 2) }}</flux:table.cell>
+                                    </flux:table.row>
+                                @endforeach
+                            </flux:table.rows>
+                        </flux:table>
+                    @else
+                        <div class="text-center py-12 bg-zinc-50 dark:bg-zinc-900/50 rounded-2xl border-2 border-dashed border-zinc-200 dark:border-zinc-800">
+                            <p class="text-zinc-500">Aún no has realizado ningún pedido.</p>
+                            <flux:button variant="ghost" href="/catalogo" class="mt-4">Ir a la tienda</flux:button>
+                        </div>
+                    @endif
                 </section>
             </div>
         </div>

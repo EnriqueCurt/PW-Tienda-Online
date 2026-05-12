@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\StoreController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -9,29 +11,29 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
-Route::get('/', function () {
-    return view('store.home');
-});
-
-Route::get('/catalogo', function () {
-    return view('store.catalogo');
-});
-
-Route::get('/detalle', function () {
-    return view('store.detalle');
-});
+Route::get('/', [StoreController::class, 'index'])->name('home');
+Route::get('/catalogo', [StoreController::class, 'catalogo'])->name('catalogo');
+Route::get('/categorias', [StoreController::class, 'categorias'])->name('categorias');
+Route::get('/categorias/{category:slug}', [StoreController::class, 'categoria'])->name('categoria');
+Route::get('/producto/{product:slug}', [StoreController::class, 'detalle'])->name('detalle');
+Route::get('/ofertas', [StoreController::class, 'ofertas'])->name('ofertas');
 
 Route::get('/carrito', function () {
     return view('store.carrito');
+})->name('carrito');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/checkout', [StoreController::class, 'checkout'])->name('checkout');
+    Route::get('/perfil', [StoreController::class, 'perfil'])->name('perfil');
 });
 
-Route::get('/checkout', function () {
-    return view('store.checkout');
-});
+Route::get('/contacto', function () {
+    return view('store.contacto');
+})->name('contacto');
 
-Route::get('/perfil', function () {
-    return view('store.perfil');
-});
+Route::get('/info/{slug}', function ($slug) {
+    return view('store.info', ['slug' => $slug]);
+})->name('info');
 
 // Store Auth
 Route::get('/login', [AuthController::class, 'showStoreLogin'])->name('login');
@@ -55,12 +57,12 @@ Route::prefix('admin')->group(function () {
             return view('admin.dashboard');
         })->name('admin.dashboard');
 
-        Route::get('/products', function () {
-            return view('admin.products-list');
-        });
-
-        Route::get('/products/new', function () {
-            return view('admin.products-new');
-        });
+        // Products CRUD
+        Route::get('/products', [ProductController::class, 'index'])->name('admin.products.index');
+        Route::get('/products/new', [ProductController::class, 'create'])->name('admin.products.create');
+        Route::post('/products', [ProductController::class, 'store'])->name('admin.products.store');
+        Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('admin.products.edit');
+        Route::put('/products/{product}', [ProductController::class, 'update'])->name('admin.products.update');
+        Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('admin.products.destroy');
     });
 });

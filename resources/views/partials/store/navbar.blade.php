@@ -14,11 +14,12 @@
         <flux:spacer />
 
         <div class="flex items-center gap-4">
-            <flux:button variant="ghost" icon="magnifying-glass" class="max-md:hidden" />
+            <form action="{{ route('catalogo') }}" method="GET" class="hidden md:flex items-center bg-zinc-100 dark:bg-zinc-800 rounded-full px-3 py-1 border border-transparent focus-within:border-brand-500 transition-colors">
+                <flux:icon.magnifying-glass class="size-4 text-zinc-400" />
+                <input type="text" name="search" placeholder="Buscar productos..." class="bg-transparent border-none focus:ring-0 text-sm w-48 text-zinc-900 dark:text-white" value="{{ request('search') }}">
+            </form>
             
-            <flux:button href="/carrito" variant="ghost" icon="shopping-cart" class="relative">
-                <flux:badge color="brand" class="absolute -top-1 -right-1 text-[10px] px-1 min-w-[18px] h-[18px] flex items-center justify-center">2</flux:badge>
-            </flux:button>
+            <livewire:cart-badge />
 
             @auth
                 <flux:dropdown>

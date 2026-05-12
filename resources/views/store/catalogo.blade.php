@@ -8,9 +8,15 @@
                 <div>
                     <flux:heading size="lg" class="mb-4">Categorías</flux:heading>
                     <flux:navlist variant="outline">
-                        <flux:navlist.item href="#" icon="chevron-right">Calzado</flux:navlist.item>
-                        <flux:navlist.item href="#" icon="chevron-right">Ropa</flux:navlist.item>
-                        <flux:navlist.item href="#" icon="chevron-right">Accesorios</flux:navlist.item>
+                        @foreach($categories as $category)
+                            <flux:navlist.item 
+                                href="{{ route('categoria', $category) }}" 
+                                icon="chevron-right"
+                                :current="isset($currentCategory) && $currentCategory->id === $category->id"
+                            >
+                                {{ $category->name }}
+                            </flux:navlist.item>
+                        @endforeach
                     </flux:navlist>
                 </div>
 
@@ -28,21 +34,14 @@
                         </flux:field>
                     </div>
                 </div>
-
-                <div>
-                    <flux:heading size="lg" class="mb-4">Color</flux:heading>
-                    <div class="flex flex-wrap gap-2">
-                        @foreach(['bg-black', 'bg-white border', 'bg-red-500', 'bg-blue-500', 'bg-green-500'] as $color)
-                            <button class="w-8 h-8 rounded-full {{ $color }} transition-transform hover:scale-110"></button>
-                        @endforeach
-                    </div>
-                </div>
             </aside>
 
             <!-- Product Grid -->
             <div class="flex-1">
                 <div class="flex items-center justify-between mb-8">
-                    <flux:heading size="lg">Catálogo Completo</flux:heading>
+                    <flux:heading size="lg">
+                        {{ isset($currentCategory) ? $currentCategory->name : 'Catálogo Completo' }}
+                    </flux:heading>
                     <flux:select placeholder="Ordenar por" class="w-48">
                         <flux:select.option>Más recientes</flux:select.option>
                         <flux:select.option>Precio: Menor a Mayor</flux:select.option>
@@ -51,27 +50,49 @@
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                    @for($i = 1; $i <= 9; $i++)
-                        <flux:card class="p-0 overflow-hidden group cursor-pointer" onclick="window.location='/detalle'">
-                            <div class="aspect-square bg-zinc-100 dark:bg-zinc-800 relative">
-                                <img src="https://picsum.photos/seed/catprod{{ $i }}/600/600" alt="Producto" class="w-full h-full object-cover">
-                                <flux:badge color="orange" class="absolute top-4 left-4">Popular</flux:badge>
-                            </div>
-                            <div class="p-6">
-                                <flux:heading size="lg" class="mb-2">Zapatillas Pro Edition {{ $i }}</flux:heading>
+                    @forelse($products as $product)
+                        <flux:card class="p-0 overflow-hidden group relative">
+                            <a href="{{ route('detalle', $product) }}" wire:navigate class="block">
+                                <div class="aspect-square bg-zinc-100 dark:bg-zinc-800 relative">
+                                    <img src="{{ $product->image_url ?? 'https://picsum.photos/seed/'.$product->id.'/600/600' }}" alt="{{ $product->name }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                                    @if($product->stock < 5 && $product->stock > 0)
+                                        <flux:badge color="orange" class="absolute top-4 left-4">¡Pocas unidades!</flux:badge>
+                                    @elseif($product->stock == 0)
+                                        <flux:badge color="zinc" class="absolute top-4 left-4">Agotado</flux:badge>
+                                    @endif
+                                </div>
+                                <div class="p-6 pb-0">
+                                    <flux:heading size="sm" class="text-zinc-500 uppercase tracking-widest text-xs font-bold mb-1">{{ $product->category->name }}</flux:heading>
+                                    <flux:heading size="lg" class="mb-2 truncate group-hover:text-brand-600 transition-colors">{{ $product->name }}</flux:heading>
+                                </div>
+                            </a>
+                            <div class="p-6 pt-2">
                                 <div class="flex items-center justify-between">
-                                    <span class="text-xl font-bold text-brand-600">$149.99</span>
-                                    <flux:button variant="ghost" icon="shopping-cart" size="sm" class="bg-zinc-100 dark:bg-zinc-800" />
+                                    <span class="text-xl font-bold text-brand-600">${{ number_format($product->price, 2) }}</span>
+                                    <div class="flex gap-2">
+                                        @if(Auth::user()?->isAdmin())
+                                            <flux:button variant="ghost" icon="pencil-square" size="sm" class="bg-zinc-100 dark:bg-zinc-800 rounded-full" href="{{ route('admin.products.edit', $product) }}" />
+                                        @endif
+                                        <livewire:add-to-cart :product="$product" />
+                                    </div>
                                 </div>
                             </div>
                         </flux:card>
-                    @endfor
+                    @empty
+                        <div class="col-span-full text-center py-20">
+                            <flux:icon.shopping-bag class="size-12 mx-auto text-zinc-300 mb-4" />
+                            <flux:heading size="lg">No se encontraron productos</flux:heading>
+                            <flux:subheading>Intenta con otros filtros o categorías.</flux:subheading>
+                        </div>
+                    @endforelse
                 </div>
 
-                <div class="mt-12 flex justify-center">
-                    <flux:button variant="ghost" icon="chevron-down">Cargar más productos</flux:button>
+                <div class="mt-12">
+                    {{ $products->links() }}
                 </div>
             </div>
         </div>
     </main>
+
+    @include('partials.store.footer')
 </x-layouts.app>

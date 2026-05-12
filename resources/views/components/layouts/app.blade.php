@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Tienda Online') }}</title>
+    <title>{{ $title ?? config('app.name', 'Premium Store') }}</title>
 
     <!-- SEO Meta Tags -->
-    <meta name="description" content="La mejor tienda online con productos premium y experiencia de usuario excepcional.">
+    <meta name="description" content="{{ $meta_description ?? 'La mejor tienda online con productos premium y experiencia de usuario excepcional.' }}">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,11 +23,12 @@
 </head>
 <body class="min-h-screen font-sans antialiased bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100">
     <div class="relative flex min-h-screen flex-col">
-        <!-- Reusable Sidebar (to be created) -->
         <main class="flex-1">
             {{ $slot }}
         </main>
     </div>
+
+    <livewire:toast />
 
     @fluxScripts
 </body>

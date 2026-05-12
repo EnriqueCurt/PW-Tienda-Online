@@ -9,9 +9,9 @@
                 <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
                     <div>
                         <flux:heading size="xl" level="1">Dashboard</flux:heading>
-                        <flux:subheading>Bienvenido de nuevo, Administrador.</flux:subheading>
+                        <flux:subheading>Bienvenido de nuevo, {{ Auth::user()->name }}.</flux:subheading>
                     </div>
-                    <flux:button variant="primary" icon="plus">Nuevo Producto</flux:button>
+                    <flux:button variant="primary" icon="plus" href="{{ route('admin.products.create') }}">Nuevo Producto</flux:button>
                 </div>
 
                 <!-- Stats Grid -->
