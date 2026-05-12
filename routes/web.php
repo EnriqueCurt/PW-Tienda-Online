@@ -4,6 +4,19 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\StoreController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Response;
+
+// Flux Fallback Routes for Production
+Route::get('/flux/flux.js', function () {
+    return Response::file(public_path('vendor/flux/flux.js'), [
+        'Content-Type' => 'application/javascript',
+    ]);
+});
+Route::get('/flux/flux.css', function () {
+    return Response::file(public_path('vendor/flux/flux.css'), [
+        'Content-Type' => 'text/css',
+    ]);
+});
 
 /*
 |--------------------------------------------------------------------------
