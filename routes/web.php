@@ -13,6 +13,7 @@ Route::get('/flux/{file}', function ($file) {
         // Fallback to the .js or .css extension if missing
         if (str_ends_with($file, '.js')) $path = public_path('vendor/flux/flux.js');
         if (str_ends_with($file, '.css')) $path = public_path('vendor/flux/flux.css');
+        if (str_ends_with($file, '.map')) return response('', 204);
     }
     
     if (file_exists($path)) {
