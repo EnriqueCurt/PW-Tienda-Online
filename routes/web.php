@@ -77,5 +77,10 @@ Route::prefix('admin')->group(function () {
         Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('admin.products.edit');
         Route::put('/products/{product}', [ProductController::class, 'update'])->name('admin.products.update');
         Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('admin.products.destroy');
+
+        // Missing Admin Routes (Placeholders)
+        Route::get('/orders', function () { return view('admin.dashboard'); })->name('admin.orders.index');
+        Route::get('/users', function () { return view('admin.dashboard'); })->name('admin.users.index');
+        Route::get('/settings', function () { return view('admin.dashboard'); })->name('admin.settings');
     });
 });
