@@ -55,30 +55,13 @@
                                         <div class="flex justify-end gap-2">
                                             <flux:button variant="ghost" icon="pencil-square" href="{{ route('admin.products.edit', $product) }}" wire:navigate />
                                             
-                                            <flux:modal.trigger name="delete-product-{{ $product->id }}">
-                                                <flux:button variant="ghost" icon="trash" class="text-red-500 hover:text-red-600" />
-                                            </flux:modal.trigger>
-
-                                            <flux:modal name="delete-product-{{ $product->id }}" class="max-w-md">
-                                                <div class="space-y-6">
-                                                    <div>
-                                                        <flux:heading size="lg">¿Eliminar producto?</flux:heading>
-                                                        <flux:subheading>Esta acción no se puede deshacer. Se eliminará "{{ $product->name }}".</flux:subheading>
-                                                    </div>
-
-                                                    <div class="flex gap-3">
-                                                        <flux:modal.close>
-                                                            <flux:button variant="ghost" class="flex-1">Cancelar</flux:button>
-                                                        </flux:modal.close>
-
-                                                        <form action="{{ route('admin.products.destroy', $product) }}" method="POST" class="flex-1">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <flux:button type="submit" variant="danger" class="w-full">Eliminar</flux:button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </flux:modal>
+                                            <form action="{{ route('admin.products.destroy', $product) }}" method="POST" onsubmit="return confirm('¿Eliminar producto? Esta acción no se puede deshacer. Se eliminará &quot;{{ $product->name }}&quot;.');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="text-red-500 hover:text-red-600 p-2 rounded-md hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors">
+                                                    <flux:icon.trash class="size-5" />
+                                                </button>
+                                            </form>
                                         </div>
                                     </flux:table.cell>
                                 </flux:table.row>

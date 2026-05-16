@@ -36,8 +36,11 @@
 
                             <flux:field>
                                 <flux:label>Estado</flux:label>
-                                <div class="pt-2">
-                                    <flux:checkbox name="is_active" label="Producto activo y visible" :checked="old('is_active', $product->is_active)" />
+                                <div class="pt-3">
+                                    <label class="flex items-center gap-2 cursor-pointer">
+                                        <input type="checkbox" name="is_active" value="1" class="w-5 h-5 rounded border-zinc-300 text-brand-500 focus:ring-brand-500 dark:border-zinc-700 dark:bg-zinc-900" {{ old('is_active', $product->is_active) ? 'checked' : '' }}>
+                                        <span class="text-sm font-medium">Producto activo y visible</span>
+                                    </label>
                                 </div>
                             </flux:field>
 
